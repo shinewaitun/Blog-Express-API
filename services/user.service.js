@@ -25,14 +25,16 @@ const getUsers = async (query) => {
     const paginate = {
       limit: parseInt(query.limit),
       skip: parseInt(query.skip),
-      sort: query.sort,
-      order: parseInt(query.order),
+      sort: query.sort ? query.sort : "createdAt",
+      order: query.order ? parseInt(query.order) : -1,
     };
     let criteria = {};
     criteria = addConditionToCriteria(
       criteria,
       "username",
-      query.username ? { $regex: new RegExp(`.*${query.username}.*`, "i") } : null
+      query.username
+        ? { $regex: new RegExp(`.*${query.username}.*`, "i") }
+        : null
     );
     criteria = addConditionToCriteria(
       criteria,

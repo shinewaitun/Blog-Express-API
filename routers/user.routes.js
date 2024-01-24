@@ -11,7 +11,7 @@ const {
 const { checkValidUser, checkUser } = require("../middlewares/user.auth");
 const { schemaValidator } = require("../middlewares/schema.validator");
 
-router.get("/findAll", checkValidUser, findAll);
+router.get("/findAll", findAll);
 router.get("/findById/:id", findById);
 
 router.post("/signIn", schemaValidator("signin"), signIn);
