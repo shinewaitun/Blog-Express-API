@@ -126,7 +126,7 @@ const validateUser = async (data) => {
     if (isValid) {
       return user;
     }
-    throw invalidError("Wrong credientails!");
+    return isValid;
   } catch (error) {
     throw invalidError("Wrong credentials!");
   }
