@@ -123,10 +123,10 @@ const validateUser = async (data) => {
   try {
     const user = await User.findOne({ email: data.email });
     const isValid = await validatePassword(data.password, user.password);
-    if (isValid) {
+    if(isValid) {
       return user;
     }
-    return isValid;
+    return;
   } catch (error) {
     throw invalidError("Wrong credentials!");
   }

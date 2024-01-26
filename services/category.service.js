@@ -6,7 +6,7 @@ const {
   unauthorizedError,
   itemNotFoundError,
 } = require("../errors/db.errors");
-const { Category } = require("../models/category.model");
+const Category = require("../models/category.model");
 
 const createCategory = async (data) => {
   try {

@@ -28,7 +28,7 @@ const signIn = async (req, res, next) => {
       const token = jwt.sign({ user: result }, process.env.KEY, {
         expiresIn: "1h",
       });
-      return ok(res, "Signed in!", { token: token });
+      return ok(res, "Signed in!", { token: token, user: result });
     }
   } catch (error) {
     next(error);
