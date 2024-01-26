@@ -10,7 +10,7 @@ require("dotenv").config({ path: "./.env.development" });
 const app = express();
 
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({

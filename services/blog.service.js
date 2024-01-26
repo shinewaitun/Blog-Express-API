@@ -34,8 +34,8 @@ const getBlogs = async (query) => {
     const paginate = {
       limit: parseInt(query.limit),
       skip: parseInt(query.skip),
-      sort: query.sort,
-      order: parseInt(query.order),
+      sort: query.sort ? query.sort : "createdAt",
+      order: query.order ? parseInt(query.order) : -1,
     };
     let criteria = {};
     criteria = addConditionToCriteria(
@@ -56,6 +56,11 @@ const getBlogs = async (query) => {
         $in: categories.map((category) => category._id),
       });
     }
+
+    const isCriteriaEmpty = Object.values(criteria).every(
+      (value) => value === ""
+    );
+
     let criteriaQuery = {};
 
     if (!isCriteriaEmpty) {
@@ -68,8 +73,9 @@ const getBlogs = async (query) => {
       blogs: await Blog.find(criteriaQuery)
         .skip((paginate.skip - 1) * paginate.limit)
         .limit(paginate.limit)
-        .sort({ [paginate.sort]: paginate.order }),
-      totalCount: await User.countDocuments(criteriaQuery),
+        .sort({ [paginate.sort]: paginate.order })
+        .populate({ path: "categoryList", select: "name" }),
+      totalCount: await Blog.countDocuments(criteriaQuery),
     };
     return result;
   } catch (error) {
