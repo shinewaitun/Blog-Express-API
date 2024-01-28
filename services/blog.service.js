@@ -20,9 +20,12 @@ const createBlog = async (data) => {
   }
 };
 
-const getBlog = async (data) => {
+const getBlog = async (id) => {
   try {
-    const result = await Blog.findById(data.id);
+    const result = await Blog.findById(id).populate([
+      { path: "categoryList", select: "name" },
+      { path: "creator", select:"username" },
+    ]);
     return result;
   } catch (error) {
     throw itemNotFoundError(error.message);
